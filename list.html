@@ -74,7 +74,35 @@
 	clearItem.addEventListener("click", function () {
 		// clear all the list items - by setting the innerHTML of theList to a blank string.
 		theList.innerHTML = "";
+		items = [];
 	});
+    
+    function filter(list, value){
+		const filtered = [];
+
+		for (var i=0 ; i<list.length;i++) {
+			const current = list[i];
+
+			if (current.indexOf(value) !== -1){
+				filtered.push(current);
+			}
+		} return filtered;
+
+		
+		}
+
+	
+
+	function showList (list) {
+        
+		theList.innerHTML = "";
+		for (var i=0 ; i<list.length;i++){
+			const current = list[i];
+			const theElement = document.createElement("li");
+			theElement.innerHTML = current;
+			theList.appendChild(theElement);
+		}
+	}
 
 	addItem.addEventListener("click", function () {
 		const theElement = document.createElement("li");
@@ -86,6 +114,7 @@
 			theValue = itemText.value;
 		} 
 		items.push(theValue);
+		showList(items)
 		theElement.innerHTML = theValue;
 		theList.appendChild(theElement);
 		
@@ -96,24 +125,9 @@
 
 	filterText.addEventListener("keyup", function() {
 
-		theList.innerHTML = "";
-		const filtered = [];
-
-		for (var i=0 ; i<items.length;i++) {
-			const current = items[i];
-
-			if (current.indexOf(filterText.value) !== -1){
-				filtered.push(current);
-			}
-		}
-
-		for (var i=0 ; i<filtered.length;i++){
-			const current = filtered[i];
-			const theElement = document.createElement("li");
-			theElement.innerHTML = current;
-			theList.appendChild(theElement);
-		}
-
+		const filtered = filter(items, filterText.value)
+        showList(filtered);
+		
 		console.log(filterText.value);
 
 	});
