@@ -69,16 +69,51 @@
 	const itemText = document.querySelector(".itemText");
 	const filterText = document.querySelector(".filterText");
 
+    var items = [];
+
 	clearItem.addEventListener("click", function () {
 		// clear all the list items - by setting the innerHTML of theList to a blank string.
+		theList.innerHTML = "";
 	});
 
 	addItem.addEventListener("click", function () {
+		const theElement = document.createElement("li");
+		//theList.appendChild(theElement);
+
+        var theValue = "My new element"
+
+		if (itemText.value) {
+			theValue = itemText.value;
+		} 
+		items.push(theValue);
+		theElement.innerHTML = theValue;
+		theList.appendChild(theElement);
+		
+	//	theElement.innerHTML = "My new element";
+	
 
 	});
 
 	filterText.addEventListener("keyup", function() {
-		
+
+		theList.innerHTML = "";
+		const filtered = [];
+
+		for (var i=0 ; i<items.length;i++) {
+			const current = items[i];
+
+			if (current.indexOf(filterText.value) !== -1){
+				filtered.push(current);
+			}
+		}
+
+		for (var i=0 ; i<filtered.length;i++){
+			const current = filtered[i];
+			const theElement = document.createElement("li");
+			theElement.innerHTML = current;
+			theList.appendChild(theElement);
+		}
+
 		console.log(filterText.value);
 
 	});
